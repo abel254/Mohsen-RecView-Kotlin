@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.muema.mohsenapp2.databinding.ActivityMainBinding
+import com.muema.mohsenapp2.swipe_rec.SwipeRecyclerActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +28,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnGridRecyView.setOnClickListener {
             val intent = Intent(this, GridRecyclerActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnSwipeRec.setOnClickListener {
+            val intent = Intent(this, SwipeRecyclerActivity::class.java)
             startActivity(intent)
         }
 
