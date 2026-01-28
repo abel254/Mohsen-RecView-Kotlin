@@ -1,8 +1,11 @@
 package com.muema.mohsenapp2.swipe_rec
 
+
+import android.graphics.Canvas
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -10,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.muema.mohsenapp2.R
 import com.muema.mohsenapp2.databinding.ActivitySwipeRecyclerBinding
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.util.Collections
+
 
 class SwipeRecyclerActivity : AppCompatActivity() {
 
@@ -62,7 +67,7 @@ class SwipeRecyclerActivity : AppCompatActivity() {
         // Swiping Feature
 
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0){
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT){
             override fun onMove(
                 recyclerView: RecyclerView,
                 source: RecyclerView.ViewHolder,
@@ -82,7 +87,48 @@ class SwipeRecyclerActivity : AppCompatActivity() {
                 viewHolder: RecyclerView.ViewHolder,
                 direction: Int
             ) {
-                TODO("Not yet implemented")
+
+                myAdapter.deleteItem(viewHolder.adapterPosition)
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+
+                RecyclerViewSwipeDecorator.Builder(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+                    .addBackgroundColor(
+                        ContextCompat.getColor(
+                            this@SwipeRecyclerActivity,
+                            R.color.my_background
+                        )
+                    )
+                    .addActionIcon(R.drawable.baseline_delete)
+                    .create()
+                    .decorate()
+
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
             }
 
         })

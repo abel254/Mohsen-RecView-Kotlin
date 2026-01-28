@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.muema.mohsenapp2.R
 
-class SwipeAdapter(private val swipeList: List<SwipeDataClass>) : RecyclerView.Adapter<SwipeAdapter.ViewHolder>(){
+class SwipeAdapter(private val swipeList: ArrayList<SwipeDataClass>) : RecyclerView.Adapter<SwipeAdapter.ViewHolder>(){
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -30,6 +30,12 @@ class SwipeAdapter(private val swipeList: List<SwipeDataClass>) : RecyclerView.A
     override fun getItemCount(): Int {
 
         return swipeList.size
+    }
+
+    fun deleteItem(adapterPosition: Int) {
+
+        swipeList.removeAt(adapterPosition)
+        notifyItemRemoved(adapterPosition)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
